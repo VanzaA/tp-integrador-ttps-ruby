@@ -12,7 +12,9 @@ module Polycon
         ]
 
         def call(name:, **)
-          warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          warn 'Ya existe ameo' if Dir.exist?(Polycon::Helpers::FileSystem.format_path(name))
+          Polycon::Helpers::FileSystem.create_folder(name)
+          # warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -50,7 +52,7 @@ module Polycon
         argument :new_name, required: true, desc: 'New name for the professional'
 
         example [
-          '"Alna Esevez" "Alma Estevez" # Renames the professional "Alna Esevez" to "Alma Estevez"',
+          '"Alna Esevez" "Alma Estevez" # Renames the professional "Alna Esevez" to "Alma Estevez"'
         ]
 
         def call(old_name:, new_name:, **)
