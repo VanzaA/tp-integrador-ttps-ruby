@@ -12,9 +12,12 @@ module Polycon
         ]
 
         def call(name:, **)
-          warn 'Ya existe ameo' if Dir.exist?(Polycon::Helpers::FileSystem.format_path(name))
-          Polycon::Helpers::FileSystem.create_folder(name)
-          # warn "TODO: Implementar creación de un o una profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          begin
+            Polycon::Models::Professional.create(name)
+            puts "El profesional #{name} se creo correctamente"
+          rescue Polycon::Exceptions::Professional::ProfessionalExist => e
+            puts e.message
+          end
         end
       end
 
@@ -29,7 +32,13 @@ module Polycon
         ]
 
         def call(name: nil)
-          warn "TODO: Implementar borrado de la o el profesional con nombre '#{name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+        #   professional = professional.find(name)
+        #   if profesional.nil?
+        #     warn "El profesional #{name} no existe"
+        #   else
+        #     profesional.delete
+        #     puts "El profesional #{name} se elimino correctamente"
+        #   end
         end
       end
 
@@ -41,7 +50,11 @@ module Polycon
         ]
 
         def call(*)
-          warn "TODO: Implementar listado de profesionales.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          # professionals_list = Professional.list
+          # if professionals_list.length == 0
+          #   professional_list.map { |professional| puts "#{professional}"}
+          # else
+          #   puts "No se encontro ningun profesional"
         end
       end
 
@@ -56,7 +69,13 @@ module Polycon
         ]
 
         def call(old_name:, new_name:, **)
-          warn "TODO: Implementar renombrado de profesionales con nombre '#{old_name}' para que pase a llamarse '#{new_name}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          # professional = Professional.find(name)
+          # if profesional.nil?
+          #   warn "El profesional #{name} no existe"
+          # else
+          #   professional.rename(new_name)
+          #   puts "El professional se actualizo correctamente"
+          # end
         end
       end
     end

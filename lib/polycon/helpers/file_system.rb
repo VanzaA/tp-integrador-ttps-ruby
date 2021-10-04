@@ -13,8 +13,8 @@ module Polycon
         FileUtils.touch(format_path(folder, file))
       end
 
-      def folder_exist?(_folder)
-        Dir.exist?(format_path(name))
+      def self.folder_exist?(folder)
+        Dir.exist?(format_path(folder))
       end
     end
   end
