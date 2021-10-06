@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Polycon
   module Commands
     module Professionals
@@ -12,12 +14,10 @@ module Polycon
         ]
 
         def call(name:, **)
-          begin
-            Polycon::Models::Professional.create(name)
-            puts "El profesional #{name} se creo correctamente"
-          rescue Polycon::Exceptions::Professional::ProfessionalExist => e
-            puts e.message
-          end
+          Polycon::Models::Professional.create(name)
+          puts "El profesional #{name} se creo correctamente"
+        rescue Polycon::Exceptions::Professional::ProfessionalExist => e
+          puts e.message
         end
       end
 
@@ -32,13 +32,11 @@ module Polycon
         ]
 
         def call(name: nil)
-        #   professional = professional.find(name)
-        #   if profesional.nil?
-        #     warn "El profesional #{name} no existe"
-        #   else
-        #     profesional.delete
-        #     puts "El profesional #{name} se elimino correctamente"
-        #   end
+          Polycon::Models::Professional.remove(name)
+          puts "El profesional #{name} se elimino correctamente"
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
+               Polycon::Exceptions::Professional::ProfessionalHasAppoinments => e
+          warn e.message
         end
       end
 
@@ -50,11 +48,9 @@ module Polycon
         ]
 
         def call(*)
-          # professionals_list = Professional.list
-          # if professionals_list.length == 0
-          #   professional_list.map { |professional| puts "#{professional}"}
-          # else
-          #   puts "No se encontro ningun profesional"
+          puts Polycon::Models::Professional.list
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound => e
+          warn e.message
         end
       end
 
@@ -69,13 +65,11 @@ module Polycon
         ]
 
         def call(old_name:, new_name:, **)
-          # professional = Professional.find(name)
-          # if profesional.nil?
-          #   warn "El profesional #{name} no existe"
-          # else
-          #   professional.rename(new_name)
-          #   puts "El professional se actualizo correctamente"
-          # end
+          Polycon::Models::Professional.rename(old_name, new_name)
+          puts "El profesional #{old_name} se renombro a #{new_name}"
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
+               Polycon::Exceptions::Professional::ProfessionalExist => e
+          warn e.message
         end
       end
     end
