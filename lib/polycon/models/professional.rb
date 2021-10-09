@@ -3,14 +3,8 @@
 module Polycon
   module Models
     class Professional
-      attr_accessor :name
-
-      def initialize(name)
-        self.name = name
-      end
-
       def self.create(name)
-        if Polycon::Helpers::FileSystem.file_exist?(name)
+        if Polycon::Helpers::FileSystem.folder_exist?(name)
           raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{name} ya existe"
         end
 
@@ -21,11 +15,11 @@ module Polycon
       def self.list
         # si no existe la carpeta .polycon en el home, no hay profesionales
         # ToDo: Ver de hacer parametrizable el lugar donde se guardan los datos
-        unless Polycon::Helpers::FileSystem.file_exist?('')
+        unless Polycon::Helpers::FileSystem.folder_exist?('')
           raise Polycon::Exceptions::Professional::ProfessionalNotFound, 'No existen profesionales'
         end
 
-        professionals = Polycon::Helpers::FileSystem.list_folders()
+        professionals = Polycon::Helpers::FileSystem.list_folders
         if professionals.empty?
           raise raise Polycon::Exceptions::Professional::ProfessionalNotFound, 'No existen profesionales'
         end
@@ -34,7 +28,7 @@ module Polycon
       end
 
       def self.remove(name)
-        unless Polycon::Helpers::FileSystem.file_exist?(name)
+        unless Polycon::Helpers::FileSystem.folder_exist?(name)
           raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{name} no existe"
         end
 
@@ -44,14 +38,14 @@ module Polycon
                 "El profesional #{name} no puede ser eliminado porque tiene #{appointments.size} turno(s) asignados"
         end
 
-        Polycon::Helpers::FileSystem.remove_folder(name)
+        Polycon::Helpers::FileSystem.remove_file(name)
       end
 
       def self.rename(old_name, new_name)
-        unless Polycon::Helpers::FileSystem.file_exist?(old_name)
+        unless Polycon::Helpers::FileSystem.folder_exist?(old_name)
           raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{old_name} no existe"
         end
-        if Polycon::Helpers::FileSystem.file_exist?(new_name)
+        if Polycon::Helpers::FileSystem.folder_exist?(new_name)
           raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{new_name} ya existe"
         end
 
