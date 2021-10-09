@@ -86,7 +86,9 @@ module Polycon
         ]
 
         def call(professional:)
-          Polycon::Models::Appointment.remove_all(professional).each { |appo| puts "El turno #{File.basename(appo, '.paf')} fue cancelado" }
+          Polycon::Models::Appointment.remove_all(professional).each do |appo|
+            puts "El turno #{File.basename(appo, '.paf')} fue cancelado"
+          end
         rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
                Polycon::Exceptions::Appointment::AppointmentNotExists => e
           warn e.message
@@ -151,9 +153,9 @@ module Polycon
 
         def call(date:, professional:, **options)
           Polycon::Models::Appointment.edit(date, professional, options)
-          puts "El turno fue actualizado correctamente"
+          puts 'El turno fue actualizado correctamente'
         rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-          Polycon::Exceptions::Appointment::AppointmentNotExists => e
+               Polycon::Exceptions::Appointment::AppointmentNotExists => e
           warn e.message
         end
       end
