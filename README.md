@@ -1,4 +1,4 @@
-# Estructura
+## Estructura
 
 El proyecto cuenta con la siguiente estructura adentro de la carpeta polycon:
 
@@ -6,7 +6,7 @@ El proyecto cuenta con la siguiente estructura adentro de la carpeta polycon:
 - Exceptions: Exepciones personalizadas para los modelos.
 - Models: Modelos que contienen toda la logica de negocio necesaria para los diferentes comandos.
 
-# Comandos
+## Comandos
 
 Se busco hacer los comandos los mas simple posible, por eso todos tienen la misma logica
 
@@ -29,3 +29,7 @@ En un principio se trata de invocar al metodo del modelo correspondiente para re
 Los modelos cuentan con diferentes validaciones y si algo inesperado ocurre ejecutan exepciones que van a ser manejadas como se comento previamente.
 
 Por el momento todo se resolvio con metodos de clase y no se hace uso de instancias.
+
+## Codigo
+
+Para respetar buenas practicas se agrego rubocop al proyecto como dependencia y se intento seguir las mayorias de las reglas definidas por el mismo (con algunas exepciones)
