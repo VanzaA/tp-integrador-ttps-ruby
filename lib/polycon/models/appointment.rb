@@ -16,16 +16,7 @@ module Polycon
         validate_professional_not_exist(professional)
         validate_appointment_not_exist(professional, date)
 
-        file_data = Polycon::Helpers::FileSystem.read_file(professional, date)
-
-        {
-          professional: professional,
-          date: date,
-          name: file_data[0],
-          surname: file_data[1],
-          phone: file_data[2],
-          notes: file_data[3]
-        }
+        get_file_content(professional, date)
       end
 
       def self.remove(date, professional)
@@ -46,6 +37,50 @@ module Polycon
         appointments.each { |date| Polycon::Helpers::FileSystem.remove_file(professional, date) }
       end
 
+      def self.list(professional)
+        validate_professional_not_exist(professional)
+        appointments = Polycon::Helpers::FileSystem.list_files(professional)
+
+        if appointments.empty?
+          raise Polycon::Exceptions::Appointment::AppointmentNotExists,
+                "El profesional #{professional} no posee ningun turno"
+        end
+        appointments
+      end
+
+      def self.reschedule(old_date, new_date, professional)
+        validate_professional_not_exist(professional)
+        validate_appointment_not_exist(professional, old_date)
+        validate_appointment_existance(professional, new_date)
+
+        Polycon::Helpers::FileSystem.rename_file(professional, old_date, new_date)
+      end
+
+      def self.edit(date, professional, **options)
+        validate_professional_not_exist(professional)
+        validate_appointment_not_exist(professional, date)
+
+        content = get_file_content(professional, date).merge(options)
+        content_as_arr = [content[:name], content[:surname], content[:phone], content[:notes]]
+        Polycon::Helpers::FileSystem.insert_content(professional, date, content_as_arr)
+      end
+
+      def self.get_file_content(professional, date)
+        file_data = Polycon::Helpers::FileSystem.read_file(professional, date)
+
+        {
+          professional: professional,
+          date: date,
+          name: file_data[0],
+          surname: file_data[1],
+          phone: file_data[2],
+          notes: file_data[3]
+        }
+      end
+
+      ###############
+      # validations #
+      ###############
       def self.validate_professional_not_exist(professional)
         unless Polycon::Helpers::FileSystem.folder_exist?(professional)
           raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{professional} no existe"

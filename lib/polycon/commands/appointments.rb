@@ -105,7 +105,10 @@ module Polycon
         ]
 
         def call(professional:)
-          warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Polycon::Models::Appointment.list(professional).each { |appo| puts "- #{appo}" }
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
+               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+          warn e.message
         end
       end
 
@@ -121,7 +124,12 @@ module Polycon
         ]
 
         def call(old_date:, new_date:, professional:)
-          warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Polycon::Models::Appointment.reschedule(old_date, new_date, professional)
+          puts "El turno #{old_date} fue actualizado a #{new_date}"
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
+               Polycon::Exceptions::Appointment::AppointmentNotExists,
+               Polycon::Exceptions::Appointment::AppointmentAlreadyExists => e
+          warn e.message
         end
       end
 
@@ -142,7 +150,11 @@ module Polycon
         ]
 
         def call(date:, professional:, **options)
-          warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Polycon::Models::Appointment.edit(date, professional, options)
+          puts "El turno fue actualizado correctamente"
+        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
+          Polycon::Exceptions::Appointment::AppointmentNotExists => e
+          warn e.message
         end
       end
     end
