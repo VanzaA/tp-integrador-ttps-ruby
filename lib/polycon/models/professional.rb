@@ -4,12 +4,9 @@ module Polycon
   module Models
     class Professional
       def self.create(name)
-        if Polycon::Helpers::FileSystem.folder_exist?(name)
-          raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{name} ya existe"
-        end
+        validate_professional_existance(name)
 
         Polycon::Helpers::FileSystem.create_folder(name)
-        new(name)
       end
 
       def self.list
@@ -28,9 +25,7 @@ module Polycon
       end
 
       def self.remove(name)
-        unless Polycon::Helpers::FileSystem.folder_exist?(name)
-          raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{name} no existe"
-        end
+        validate_professional_not_exist(name)
 
         appointments = Polycon::Helpers::FileSystem.list_files(name)
         unless appointments.empty?
@@ -42,14 +37,30 @@ module Polycon
       end
 
       def self.rename(old_name, new_name)
-        unless Polycon::Helpers::FileSystem.folder_exist?(old_name)
-          raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{old_name} no existe"
-        end
-        if Polycon::Helpers::FileSystem.folder_exist?(new_name)
-          raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{new_name} ya existe"
-        end
+        validate_professional_not_exist(old_name)
+        validate_professional_existance(new_name)
 
         Polycon::Helpers::FileSystem.rename(old_name, new_name)
+      end
+
+      ###############
+      # validations #
+      ###############
+
+      def self.validate_professional_not_exist(name)
+        unless Polycon::Helpers::FileSystem.folder_exist?(name)
+          raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{name} no existe"
+        end
+
+        true
+      end
+
+      def self.validate_professional_existance(name)
+        if Polycon::Helpers::FileSystem.folder_exist?(name)
+          raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{name} ya existe"
+        end
+
+        true
       end
     end
   end
