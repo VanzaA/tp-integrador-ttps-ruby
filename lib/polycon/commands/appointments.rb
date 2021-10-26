@@ -20,8 +20,8 @@ module Polycon
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
           Polycon::Models::Appointment.create(date, professional, name, surname, phone, notes)
           puts 'Se creo el turno correctamente'
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound, Polycon::Exceptions::Date::InvalidDate,
-               Polycon::Exceptions::Appointment::AppointmentAlreadyExists => e
+        rescue Polycon::Exceptions::Professional::NotFound, Polycon::Exceptions::Date::InvalidDate,
+               Polycon::Exceptions::Appointment::AlreadyExists => e
           puts e.message
         rescue Date::Error
           puts 'EL formato de la fecha es invalido'
@@ -51,8 +51,8 @@ module Polycon
           Polycon::Models::Appointment.show(date, professional).each do |key, value|
             puts "#{translation_keys[key]}: #{value}" if value
           end
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         end
       end
@@ -70,8 +70,8 @@ module Polycon
         def call(date:, professional:)
           Polycon::Models::Appointment.remove(date, professional)
           puts "El turno del profesional #{professional} para la fecha #{date} se cancelo correctamente"
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         end
       end
@@ -89,8 +89,8 @@ module Polycon
           Polycon::Models::Appointment.remove_all(professional).each do |appo|
             puts "El turno #{File.basename(appo, '.paf')} fue cancelado"
           end
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         end
       end
@@ -108,8 +108,8 @@ module Polycon
 
         def call(professional:)
           Polycon::Models::Appointment.list(professional).each { |appo| puts "- #{File.basename(appo, '.paf')}" }
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         end
       end
@@ -128,9 +128,9 @@ module Polycon
         def call(old_date:, new_date:, professional:)
           Polycon::Models::Appointment.reschedule(old_date, new_date, professional)
           puts "El turno #{old_date} fue actualizado a #{new_date}"
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists,
-               Polycon::Exceptions::Appointment::AppointmentAlreadyExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists,
+               Polycon::Exceptions::Appointment::AlreadyExists => e
           warn e.message
         end
       end
@@ -154,8 +154,8 @@ module Polycon
         def call(date:, professional:, **options)
           Polycon::Models::Appointment.edit(date, professional, options)
           puts 'El turno fue actualizado correctamente'
-        rescue Polycon::Exceptions::Professional::ProfessionalNotFound,
-               Polycon::Exceptions::Appointment::AppointmentNotExists => e
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         end
       end

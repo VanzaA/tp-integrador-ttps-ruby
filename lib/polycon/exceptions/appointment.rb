@@ -3,13 +3,13 @@
 module Polycon
   module Exceptions
     module Appointment
-      class AppointmentAlreadyExists < StandardError
+      class AlreadyExists < StandardError
         def initialize(msg = 'El turno ya existe')
           super(msg)
         end
       end
 
-      class AppointmentNotExists < StandardError
+      class NotExists < StandardError
         def initialize(msg = 'El turno no existe')
           super(msg)
         end

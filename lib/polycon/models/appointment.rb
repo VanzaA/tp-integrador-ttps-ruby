@@ -31,7 +31,7 @@ module Polycon
         appointments = Polycon::Helpers::FileSystem.list_files(professional)
 
         if appointments.empty?
-          raise Polycon::Exceptions::Appointment::AppointmentNotExists,
+          raise Polycon::Exceptions::Appointment::NotExists,
                 "El profesional #{professional} no posee ningun turno"
         end
         appointments.each { |date| Polycon::Helpers::FileSystem.remove_file(professional, date) }
@@ -42,7 +42,7 @@ module Polycon
         appointments = Polycon::Helpers::FileSystem.list_files(professional)
 
         if appointments.empty?
-          raise Polycon::Exceptions::Appointment::AppointmentNotExists,
+          raise Polycon::Exceptions::Appointment::NotExists,
                 "El profesional #{professional} no posee ningun turno"
         end
         appointments
@@ -83,7 +83,7 @@ module Polycon
       ###############
       def self.validate_professional_not_exist(professional)
         unless Polycon::Helpers::FileSystem.folder_exist?(professional)
-          raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{professional} no existe"
+          raise Polycon::Exceptions::Professional::NotFound, "El profesional #{professional} no existe"
         end
 
         true
@@ -100,7 +100,7 @@ module Polycon
 
       def self.validate_appointment_existance(professional, date)
         if Polycon::Helpers::FileSystem.file_exist?(professional, date)
-          raise Polycon::Exceptions::Appointment::AppointmentAlreadyExists,
+          raise Polycon::Exceptions::Appointment::AlreadyExists,
                 "Ya se encuentra un turno para el profesional #{professional} a la hora #{date}"
         end
 
@@ -109,7 +109,7 @@ module Polycon
 
       def self.validate_appointment_not_exist(professional, date)
         unless Polycon::Helpers::FileSystem.file_exist?(professional, date)
-          raise Polycon::Exceptions::Appointment::AppointmentNotExists,
+          raise Polycon::Exceptions::Appointment::NotExists,
                 "El turno para el professional #{professional} en la fecha #{date} no existe"
         end
 

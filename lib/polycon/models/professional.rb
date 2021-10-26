@@ -13,12 +13,12 @@ module Polycon
         # si no existe la carpeta .polycon en el home, no hay profesionales
         # ToDo: Ver de hacer parametrizable el lugar donde se guardan los datos
         unless Polycon::Helpers::FileSystem.folder_exist?('')
-          raise Polycon::Exceptions::Professional::ProfessionalNotFound, 'No existen profesionales'
+          raise Polycon::Exceptions::Professional::NotFound, 'No existen profesionales'
         end
 
         professionals = Polycon::Helpers::FileSystem.list_folders
         if professionals.empty?
-          raise raise Polycon::Exceptions::Professional::ProfessionalNotFound, 'No existen profesionales'
+          raise raise Polycon::Exceptions::Professional::NotFound, 'No existen profesionales'
         end
 
         professionals
@@ -29,7 +29,7 @@ module Polycon
 
         appointments = Polycon::Helpers::FileSystem.list_files(name)
         unless appointments.empty?
-          raise Polycon::Exceptions::Professional::ProfessionalHasAppoinments,
+          raise Polycon::Exceptions::Professional::HasAppoinments,
                 "El profesional #{name} no puede ser eliminado porque tiene #{appointments.size} turno(s) asignados"
         end
 
@@ -49,7 +49,7 @@ module Polycon
 
       def self.validate_professional_not_exist(name)
         unless Polycon::Helpers::FileSystem.folder_exist?(name)
-          raise Polycon::Exceptions::Professional::ProfessionalNotFound, "El profesional #{name} no existe"
+          raise Polycon::Exceptions::Professional::NotFound, "El profesional #{name} no existe"
         end
 
         true
@@ -57,7 +57,7 @@ module Polycon
 
       def self.validate_professional_existance(name)
         if Polycon::Helpers::FileSystem.folder_exist?(name)
-          raise Polycon::Exceptions::Professional::ProfessionalExist, "El profesional #{name} ya existe"
+          raise Polycon::Exceptions::Professional::Exist, "El profesional #{name} ya existe"
         end
 
         true

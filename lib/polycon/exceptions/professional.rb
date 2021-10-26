@@ -3,19 +3,19 @@
 module Polycon
   module Exceptions
     module Professional
-      class ProfessionalExist < StandardError
+      class Exist < StandardError
         def initialize(msg = 'El professional ya existe')
           super(msg)
         end
       end
 
-      class ProfessionalNotFound < StandardError
+      class NotFound < StandardError
         def initialize(msg = 'No se encontro el profesional')
           super(msg)
         end
       end
 
-      class ProfessionalHasAppoinments < StandardError
+      class HasAppoinments < StandardError
         def initialize(msg = 'El profesional tiene turnos y no puede ser')
           super(msg)
         end
