@@ -2,6 +2,24 @@ require 'date'
 module Polycon
   module Models
     class Appointment
+      attr_acessor :date, :professional, :time, :filename
+      START_OF_TABLE = '8'
+      END_OF_TABLE = '20'
+      RANGE_MINUTES = 15
+
+      def initialize(date, time, professional, filename)
+        self.date = date
+        self.time = time
+        self.professional = professional
+        self.filename = filename
+      end
+
+      def pacient_full_name
+        data = Polycon::Helpers::FileSystem.read_file(self.professional, self.filename)
+
+        "#{data[1]}, #{data[0]}"
+      end
+
       def self.create(date, professional, name, surname, phone, notes = nil)
         validate_professional_not_exist(professional)
         validate_date(date)
@@ -76,6 +94,44 @@ module Polycon
           phone: file_data[2],
           notes: file_data[3]
         }
+      end
+
+      def self.list_by_date_and_professional(date, fullweek, professionals)
+        parsed_date = Date.parse(date)
+        begining_of_week = parsed_date - parsed_date.wday
+        dates = fullweek ? (0...7).to_a.map { |day| (begining_of_week + day)} : [parsed_date]
+
+        appointments = dates.map do |day|
+          files = Polycon::Helpers::FileSystem.get_files_by_date_and_professionals(day.to_s, professionals)
+          instances = generate_appointments_instances(files)
+          appointments_formatteds = format_appointments_for_table(instances)
+          { "#{day.to_s()}(#{day.strftime("%A")})" => appointments_formatteds }
+        end
+
+        if appointments.all? {|day, appointments_for_day| appointments_for_day.empty?}
+          raise Polycon::Exceptions::Appointments::NotExists, "No hay turnos registrados en esa fecha"
+        end
+
+        appointments
+      end
+
+      def self.generate_appointments_instances(files)
+        files.flat_map do |professional, appointments|
+          appointments.map do |appointment|
+            parsed_date = DateTime.parse(File.basename(appointment, ".paf"))
+            date = parsed_date.to_date.to_s
+            time = parsed_date.strftime("%H:%M")
+            self.new(date, time, professional, appointment)
+          end
+        end
+      end
+
+      def self.format_appointments_for_table(appointments)
+        (START_OF_TABLE..END_OF_TABLE).flat_map do |hour|
+          (0..3).map do |min|
+            appointments.select{|appointment| appointment.time.include?("#{hour}:#{min*RANGE_MINUTES}")}
+          end
+        end
       end
 
       ###############

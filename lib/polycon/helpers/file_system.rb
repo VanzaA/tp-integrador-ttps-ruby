@@ -61,6 +61,12 @@ module Polycon
       def self.read_file(folder, file)
         File.read(format_path(folder, file)).split("\n")
       end
+
+      def self.get_files_by_date_and_professionals(date, professionals)
+        professionals.map do |professional|
+          { professional => list_files(professional).select{ |f| f.include?(date)} }
+        end
+      end
     end
   end
 end

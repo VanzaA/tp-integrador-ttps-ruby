@@ -43,6 +43,15 @@ module Polycon
         Polycon::Helpers::FileSystem.rename(old_name, new_name)
       end
 
+      def self.list_or_filter_by_name(professional)
+        unless professional.empty?
+          validate_professional_not_exist(professional)
+          return [professional]
+        end
+        return list
+
+      end
+
       ###############
       # validations #
       ###############

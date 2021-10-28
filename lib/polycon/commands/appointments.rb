@@ -159,6 +159,34 @@ module Polycon
           warn e.message
         end
       end
+
+      class Export < Dry::CLI::Command
+        desc 'Exports all the appointments of the professionals in a table which is saved in an html file.'
+
+        argument :date, required: true, desc: 'Full date for the appointments'
+        option :professional, required: false, default: '', desc: 'Full name of the professional'
+        option :fullweek, required: false, default: false, desc: 'If you want to export a complete week'
+        option :path, required: false, default: '', desc: 'path in your computer where you want to save the output table'
+
+        example [
+          '"2021-09-16" --professional="Alma Estevez" --fullweek="true" #',
+          '"2021-09-16" --professional="Alma Estevez" # Week default will be false',
+          '"2021-09-16" # will retrieve appointments for all professionales in the specified date',
+          '"2021-09-16" --fullweek="true" # will retrieve appointments for all professionales in the week of the specified date starting by sunday',
+          '"2021-09-16" --path="/home/user/table.html" # the output table will be save in the path /home/user/table.html'
+        ]
+
+        def call(date:, professional:, fullweek:, path:, **options)
+          professionals = Polycon::Models::Professional.list_or_filter_by_name(professional)
+          appointments = Polycon::Models::Appointment.list_by_date(date, fullweek, professionals)
+        rescue Polycon::Exceptions::Professional::NotFound,
+               Polycon::Exceptions::Appointment::NotExists => e
+          warn e.message
+        rescue Date::Error
+          puts 'EL formato de la fecha es invalido'
+        end
+        end
+      end
     end
   end
 end
