@@ -7,87 +7,79 @@
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
-    <div>
-      <div class="header"></div>
-      <% range_time.each do |time|%>
-        <div class="time-cell"><%= time %></div>
-      <% end %>
-    </div>
-    <% appointments.each do |appointments_for_day|%>
-      <div>
-        <div class="header"><%= appointments_for_day.keys[0] %></div>
-        <% appointments_for_day.values[0].each do |appointments_for_time|%>
-          <div class="cell">
-            <% appointments_for_time.each do |appointment|%>
-                <div><%= appointment.pacient_full_name %><strong>(<%= appointment.professional %>)</strong></div>
-            <% end %>
-          </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Horas</th>
+        <% days.each do |day|%>
+          <th><%= day.to_s %></th>
         <% end %>
-      </div>
-    <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% range_time.each_with_index do |time, index| %>
+        <tr>
+          <td><%= time %></td>
+          <% appointments.each do |appointments_for_day|%>
+            <td>
+              <% appointments_for_day[index].each do | appointment | %>
+                <div><%= appointment.pacient_full_name %><strong> (<%=appointment.professional %>)</strong></div>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </body>
 </html>
 
 <style>
 body {
-  width: 100%;
-}
-.cell {
-  width: 100%;
-  min-height: 50px;
-  height: 100%;
-  border: 1px solid black;
-  min-width: 200px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-.cell:empty::before {
-  content: "No hay turno"
-}
-
-.header{
-  min-height: 50px;
-  height: 100%;
-  width: 100%;
-  min-width: 200px;
-  color: black;
-  border: 1px solid black;
-  display: flex;
   justify-content: center;
-  align-items: center;
+  background-color: #f8e8e8;
 }
 
+table{
+  border-spacing: 0;
+  border-collapse: separate;
+}
 
-.time-cell {
-  min-height: 50px;
-  height: 100%;
-  width: 100%;
+thead {
+	width:100%;
+	background:#000;
+  color: #fff;
+}
+
+th {
+  background:#000;
+  color: #fff;
+  min-width: 150px;
+  padding: 10px;
   text-align: center;
-  color: red;
-  border: 1px solid black;
-  min-width: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 0 20px;
+tbody tr:nth-child(odd) {
+  background-color: grey;
 }
 
-.container > div {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+tr {
+  min-height: 35px;
+}
+td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 10px;
   text-align: center;
+}
+
+tbody tr:last-child {
+  display: none;
 }
 </style>

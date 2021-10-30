@@ -106,14 +106,14 @@ module Polycon
           instances = generate_appointments_instances(files)
           appointments_formatteds = format_appointments_for_table(instances)
 
-          { day.to_s() => appointments_formatteds }
+          appointments_formatteds
         end
 
-        if appointments.all? {|appointments_for_day| appointments_for_day.values[0].empty?}
+        if appointments.all? {|appointments_for_day| appointments_for_day.empty?}
           raise Polycon::Exceptions::Appointments::NotExists, "No hay turnos registrados en esa fecha"
         end
 
-        appointments
+        { days: dates, appointments: appointments }
       end
 
       def self.generate_appointments_instances(files)
