@@ -109,8 +109,12 @@ module Polycon
           appointments_formatteds
         end
 
-        if appointments.all? {|appointments_for_day| appointments_for_day.empty?}
-          raise Polycon::Exceptions::Appointments::NotExists, "No hay turnos registrados en esa fecha"
+        empty_days = appointments.all? do |appointments_for_day|
+          appointments_for_day.all? { |appointment| appointment.empty? }
+        end
+
+        if empty_days
+          raise Polycon::Exceptions::Appointment::NotExists, "No hay turnos registrados en esa fecha"
         end
 
         { days: dates, appointments: appointments }
