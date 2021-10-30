@@ -7,6 +7,87 @@
   <title>Document</title>
 </head>
 <body>
-  <% @calendario %>
+  <div class="container">
+    <div>
+      <div class="header"></div>
+      <% range_time.each do |time|%>
+        <div class="time-cell"><%= time %></div>
+      <% end %>
+    </div>
+    <% appointments.each do |appointments_for_day|%>
+      <div>
+        <div class="header"><%= appointments_for_day.keys[0] %></div>
+        <% appointments_for_day.values[0].each do |appointments_for_time|%>
+          <div class="cell">
+            <% appointments_for_time.each do |appointment|%>
+                <div><%= appointment.pacient_full_name %><strong>(<%= appointment.professional %>)</strong></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 </body>
 </html>
+
+<style>
+body {
+  width: 100%;
+}
+.cell {
+  width: 100%;
+  min-height: 50px;
+  height: 100%;
+  border: 1px solid black;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell:empty::before {
+  content: "No hay turno"
+}
+
+.header{
+  min-height: 50px;
+  height: 100%;
+  width: 100%;
+  min-width: 200px;
+  color: black;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.time-cell {
+  min-height: 50px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  color: red;
+  border: 1px solid black;
+  min-width: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+.container > div {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+</style>

@@ -4,6 +4,7 @@ module Polycon
   module Commands
     module Appointments
       class Create < Dry::CLI::Command
+        require 'erb'
         desc 'Create an appointment'
 
         argument :date, required: true, desc: 'Full date for the appointment'
@@ -178,13 +179,21 @@ module Polycon
 
         def call(date:, professional:, fullweek:, path:, **options)
           professionals = Polycon::Models::Professional.list_or_filter_by_name(professional)
-          appointments = Polycon::Models::Appointment.list_by_date(date, fullweek, professionals)
+          appointments = Polycon::Models::Appointment.list_by_date_and_professional(date, fullweek, professionals)
+          range_time = (8..20).flat_map do |hour|
+            (0..3).map do |min|
+              "#{hour}:#{min*15 == 0 ? '00' : min*15}"
+            end
+          end
+          erb_file_path = File.join(File.dirname(__FILE__), '../templates/calendar.html.erb')
+          template = ERB.new(File.read(erb_file_path))
+          output_path = File.join(File.dirname(__FILE__), '../templates/text.html')
+          File.write(output_path, template.result_with_hash({appointments: appointments, range_time: range_time}))
         rescue Polycon::Exceptions::Professional::NotFound,
                Polycon::Exceptions::Appointment::NotExists => e
           warn e.message
         rescue Date::Error
           puts 'EL formato de la fecha es invalido'
-        end
         end
       end
     end

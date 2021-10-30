@@ -2,7 +2,7 @@ require 'date'
 module Polycon
   module Models
     class Appointment
-      attr_acessor :date, :professional, :time, :filename
+      attr_accessor :date, :professional, :time, :filename
       START_OF_TABLE = '8'
       END_OF_TABLE = '20'
       RANGE_MINUTES = 15
@@ -105,10 +105,11 @@ module Polycon
           files = Polycon::Helpers::FileSystem.get_files_by_date_and_professionals(day.to_s, professionals)
           instances = generate_appointments_instances(files)
           appointments_formatteds = format_appointments_for_table(instances)
-          { "#{day.to_s()}(#{day.strftime("%A")})" => appointments_formatteds }
+
+          { day.to_s() => appointments_formatteds }
         end
 
-        if appointments.all? {|day, appointments_for_day| appointments_for_day.empty?}
+        if appointments.all? {|appointments_for_day| appointments_for_day.values[0].empty?}
           raise Polycon::Exceptions::Appointments::NotExists, "No hay turnos registrados en esa fecha"
         end
 
@@ -116,12 +117,12 @@ module Polycon
       end
 
       def self.generate_appointments_instances(files)
-        files.flat_map do |professional, appointments|
-          appointments.map do |appointment|
+        files.flat_map do |item|
+          item.values[0].map do |appointment|
             parsed_date = DateTime.parse(File.basename(appointment, ".paf"))
             date = parsed_date.to_date.to_s
             time = parsed_date.strftime("%H:%M")
-            self.new(date, time, professional, appointment)
+            self.new(date, time, item.keys[0], appointment)
           end
         end
       end

@@ -44,7 +44,7 @@ module Polycon
       end
 
       def self.list_or_filter_by_name(professional)
-        unless professional.empty?
+        unless professional.nil? || professional.empty?
           validate_professional_not_exist(professional)
           return [professional]
         end
