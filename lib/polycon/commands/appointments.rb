@@ -3,8 +3,8 @@
 module Polycon
   module Commands
     module Appointments
+      EXPORT_CALENDAR_DEFAULT_PATH = File.join(File.dirname(__FILE__), '../../../calendar.html')
       class Create < Dry::CLI::Command
-        require 'erb'
         desc 'Create an appointment'
 
         argument :date, required: true, desc: 'Full date for the appointment'
@@ -186,15 +186,15 @@ module Polycon
             end
           end
 
-          erb_file_path = File.join(File.dirname(__FILE__), '../templates/calendar.html.erb')
-          template = ERB.new(File.read(erb_file_path))
-          output_path = File.join(File.dirname(__FILE__), '../templates/text.html')
+          template = Polycon::Helpers::FileSystem.get_path_for_template('calendar.html.erb')
 
-          File.write(output_path, template.result_with_hash({
+          output_path = path.empty? ? EXPORT_CALENDAR_DEFAULT_PATH : path
+          Polycon::Helpers::FileSystem.export_file_with_template(output_path, template, {
             days: result[:days],
             appointments: result[:appointments],
             range_time: range_time
-          }))
+          })
+          puts "El archivo se genero en la ruta #{output_path}"
         rescue Polycon::Exceptions::Professional::NotFound,
                Polycon::Exceptions::Appointment::NotExists => e
           warn e.message

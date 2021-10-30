@@ -1,6 +1,8 @@
 module Polycon
   module Helpers
     module FileSystem
+      require 'erb'
+
       POLYCON_FOLDER = '.polycon'
       def self.format_filename(name)
         if name.empty?
@@ -66,6 +68,14 @@ module Polycon
         professionals.map do |professional|
           { professional => list_files(professional).select{ |f| f.include?(date)} }
         end
+      end
+
+      def self.get_path_for_template(filename)
+        File.join(File.dirname(__FILE__), '../templates/', filename)
+      end
+
+      def self.export_file_with_template(output_path, template, hash)
+        File.write(output_path, ERB.new(File.read(template)).result_with_hash(hash))
       end
     end
   end
