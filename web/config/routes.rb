@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'download', action: :download, controller: 'professionals'
   resources :appointments
   resources :professionals
   root to: 'application#home'

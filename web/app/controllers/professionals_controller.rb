@@ -39,6 +39,11 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  def download
+    content = "<div>this is a test</div>"
+    send_data content, filename: "test.html"
+  end
+
   # DELETE /professionals/1
   def destroy
     @professional.destroy
