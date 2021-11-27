@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2021_11_27_002204) do
 
   create_table "appointments", charset: "utf8mb4", force: :cascade do |t|
-    t.date "date", null: false
+    t.datetime "date", null: false
     t.bigint "professional_id", null: false
     t.string "name", null: false
     t.string "surname", null: false

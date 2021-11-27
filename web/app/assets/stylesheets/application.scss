@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+@import '@picocss/pico/scss/pico';
+@import 'appointments';
+@import 'professionals';
+@import 'sessions';

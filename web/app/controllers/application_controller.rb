@@ -1,9 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :require_login, except: :healt_check
+  before_action :require_login, except: :home
 
-  def healt_check
-    render plain: 'success', status: :ok
-  end
   def home; end
   private
 

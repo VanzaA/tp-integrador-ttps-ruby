@@ -6,9 +6,9 @@ class SessionsController < ApplicationController
 
   def create
     if login(login_params[:email], login_params[:password])
-      redirect_back_or_to(root_path, status: :see_other)
+      redirect_to root_path
     else
-      render action: 'show'
+      render action: :show
     end
   end
 

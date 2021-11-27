@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :date %>
-    <%= form.date_select :date %>
+    <%= form.datetime_select :date, minute_step: 30 %>
   </div>
 
   <div class="field">
     <%= form.label :professional_id %>
-    <%= form.text_field :professional_id %>
+    <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] })%>
   </div>
 
   <div class="field">

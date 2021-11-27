@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div>
-      <% if logged_in? %>
-        <%= button_to :cerrar_session, session_path, method: :destroy %>
-      <% end %>
+    <main class="container">
       <div>
-        test
-        <%= current_user  %>
-      </div>
+        <% if logged_in? %>
+          <%= button_to 'Profesionales', professionals_path, method: :get %>
+          <%= button_to 'Turnos', appointments_path, method: :get %>
+          <%= button_to 'Cerrar sesion', session_path, method: :delete %>
+        <% else %>
+          <%= button_to 'Iniciar sesion', session_path, method: :show %>
+        <% end %>
+        <div>
+          <%= current_user  %>
+        </div>
 
-    </div>
-    <%= yield %>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>
