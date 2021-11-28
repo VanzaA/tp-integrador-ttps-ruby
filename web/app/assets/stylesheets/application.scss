@@ -18,3 +18,13 @@
 @import 'appointments';
 @import 'professionals';
 @import 'sessions';
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  nav {
+    width: 95%;
+  }
+}
