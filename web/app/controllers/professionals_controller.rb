@@ -44,7 +44,8 @@ class ProfessionalsController < ApplicationController
 
   def cancel_all_appointments
     authorize!
-    @professional.update(professional_params)
+
+    @professional.appointments.destroy_all
     redirect_to professionals_path, notice: "Se cancelaron todos los turnos del profesional #{@professional.full_name}."
   end
 

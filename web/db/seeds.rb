@@ -1,4 +1,11 @@
-MOCK_TEXT = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam malesuada pretium libero nec eleifend. Sed sed dolor feugiat, mollis tortor at, vestibulum enim. Cras aliquam lorem sed urna congue ultricies. Nullam pellentesque, nulla ut elementum dictum, dolor ipsum cursus nibh, id interdum ligula ante in erat. Nulla varius purus vel purus vehicula, vitae molestie felis posuere. Nam ac facilisis purus, in fermentum ipsum. Proin aliquet tellus at metus condimentum, id ultrices leo tempus. Fusce nulla dolor, condimentum non porttitor eget, vulputate sed arcu."
+MOCK_TEXT = <<~string.squish
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam malesuada pretium libero nec eleifend.
+Sed sed dolor feugiat, mollis tortor at, vestibulum enim. Cras aliquam lorem sed urna congue ultricies.
+Nullam pellentesque, nulla ut elementum dictum, dolor ipsum cursus nibh, id interdum ligula ante in erat.
+Nulla varius purus vel purus vehicula, vitae molestie felis posuere. Nam ac facilisis purus, in fermentum ipsum.
+Proin aliquet tellus at metus condimentum, id ultrices leo tempus. Fusce nulla dolor,
+condimentum non porttitor eget, vulputate sed arcu.
+string
 
 User.find_or_create_by(email: 'admin@example.com') do |user|
   user.password = 'password'

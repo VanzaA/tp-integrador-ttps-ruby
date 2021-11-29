@@ -15,6 +15,7 @@ class Appointment < ApplicationRecord
   end
 
   private
+
   def minute_step
     return unless date_and_time_present
 
