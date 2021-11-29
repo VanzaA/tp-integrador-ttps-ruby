@@ -22,4 +22,8 @@ class ProfessionalPolicy < ApplicationPolicy
   def destroy?
     user.admin?
   end
+
+  def cancel_all_appointments?
+    user.admin?
+  end
 end

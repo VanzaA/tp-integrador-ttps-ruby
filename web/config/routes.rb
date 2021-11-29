@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   get 'download', action: :download, controller: 'professionals'
   resources :appointments
-  resources :professionals, only: [:index, :new, :edit, :destroy, :create, :update]
+  resources :professionals, only: [:index, :new, :edit, :destroy, :create, :update] do
+    member do
+      post 'cancel_all_appointments'
+    end
+  end
   root to: 'application#home'
   resource :session, only: [:show, :create, :destroy]
 

@@ -22,6 +22,7 @@
 
         <td><%= link_to 'Editar', edit_professional_path(professional) if allowed_to?(:edit?, professional)%></td>
         <td><%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Esta seguro de que desea borrar?' } if allowed_to?(:destroy?, professional) %></td>
+        <td><%= link_to 'Cancelar turnos', cancel_all_appointments_professional_path(professional.id, professional), method: :post, data: { confirm: 'Esta seguro de que desea cancelar todos los turnos?' } if can_cancel_all(professional) && allowed_to?(:cancel_all_appointments?, professional) %></td>
       </tr>
     <% end %>
   </tbody>
