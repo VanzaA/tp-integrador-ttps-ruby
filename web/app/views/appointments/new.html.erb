@@ -1,5 +1,7 @@
-<h1>New Appointment</h1>
+<div class="action-header">
+  <h1>Nuevo turno</h1>
+  <%= link_to 'Volver', appointments_path, class: "action"%>
+</div>
 
 <%= render 'form', appointment: @appointment %>
 
-<%= link_to 'Back', appointments_path %>

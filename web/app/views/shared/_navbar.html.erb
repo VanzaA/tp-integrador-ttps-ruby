@@ -1,0 +1,14 @@
+<nav>
+  <ul>
+    <% if logged_in? %>
+      <li><%= link_to 'Polycon', root_path, method: :get %></li>
+    <% end %>
+  </ul>
+  <ul>
+  <% if logged_in? %>
+    <li><%= link_to 'Profesionales', professionals_path, method: :get %></li>
+    <li><%= link_to 'Turnos', appointments_path, method: :get %></li>
+    <li><%= link_to 'Cerrar sesion', session_path, method: :delete %></li>
+  <% end %>
+  </ul>
+</nav>

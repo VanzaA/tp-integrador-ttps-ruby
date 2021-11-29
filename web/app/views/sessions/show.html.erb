@@ -1,9 +1,14 @@
-<%= form_with url: session_path, scope: :login do |form| %>
-  <label> Email </label>
-  <%= form.text_field :email %>
+<div class="login">
+  <div class="align-center">
+    <h1>Polycon</h1>
+  </div>
+  <%= form_with url: session_path, scope: :login do |form| %>
+    <label> Email </label>
+    <%= form.text_field :email %>
 
-  <label> Contraseña </label>
-  <%= form.password_field :password %>
+    <label> Contraseña </label>
+    <%= form.password_field :password %>
 
-  <%= form.submit 'Iniciar sesion' %>
-<% end %>
+    <%= form.submit 'Iniciar sesion' %>
+  <% end %>
+</div>

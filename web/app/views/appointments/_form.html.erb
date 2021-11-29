@@ -1,19 +1,25 @@
 <%= form_with(model: appointment) do |form| %>
   <% if appointment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+      <h2>
+        <%= appointment.errors.count %>
+        <%= appointment.errors.count == 1 ? "error:" : "errores:" %>
+      </h2>
 
-      <ul>
-        <% appointment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <% appointment.errors.each do |error| %>
+        <p>- <%= error.message %></p>
+      <% end %>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :date %>
-    <%= form.datetime_select :date, minute_step: 30 %>
+    <%= form.label "Fecha" %>
+    <%= form.date_field :date %>
+  </div>
+
+   <div class="field">
+    <%= form.label "Hora" %>
+    <%= form.time_field :time, minute_step: 15, min: "08:00", max: "20:00"%>
   </div>
 
   <div class="field">
@@ -22,26 +28,26 @@
   </div>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label "Nombre" %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :surname %>
+    <%= form.label "Apellido" %>
     <%= form.text_field :surname %>
   </div>
 
   <div class="field">
-    <%= form.label :phone %>
+    <%= form.label "Telefono" %>
     <%= form.text_field :phone %>
   </div>
 
   <div class="field">
-    <%= form.label :notes %>
+    <%= form.label "Notas" %>
     <%= form.text_area :notes %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Crear turno" %>
   </div>
 <% end %>

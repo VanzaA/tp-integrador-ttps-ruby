@@ -19,6 +19,16 @@
 @import 'professionals';
 @import 'sessions';
 
+[data-theme="light"] {
+  --primary: #d81b60!important;
+  --primary-hover: #e91e63!important;
+  --primary-focus: rgba(216, 27, 96, 0.25)!important;
+  --primary-inverse: #fff!important;
+  --background-color: #bdbdbd!important;
+  --form-element-border-color: #5b85a5!important;
+  --color: black!important;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -27,4 +37,38 @@ body {
   nav {
     width: 95%;
   }
+}
+
+a, a:visited {
+  color: var(--primary)
+}
+
+.container {
+  padding-top: 3rem!important
+}
+
+.action-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  margin-bottom: 2rem;
+  h1{
+    --typography-spacing-vertical: 1rem!important;
+  }
+}
+
+.align-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  margin-top: 5%;
+}
+
+.action {
+  font-size: 1.5rem;
+  background-color: var(--background-color)!important;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
   <head>
     <title>Polycon</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,20 +10,8 @@
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
     <main class="container">
-      <div>
-        <% if logged_in? %>
-          <%= button_to 'Profesionales', professionals_path, method: :get %>
-          <%= button_to 'Turnos', appointments_path, method: :get %>
-          <%= button_to 'Cerrar sesion', session_path, method: :delete %>
-        <% else %>
-          <%= button_to 'Iniciar sesion', session_path, method: :show %>
-        <% end %>
-        <div>
-          <%= current_user  %>
-        </div>
-
-      </div>
       <%= yield %>
     </main>
   </body>
