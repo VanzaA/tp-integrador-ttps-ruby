@@ -1,5 +1,6 @@
-<h1>New Professional</h1>
-
+<div class="action-header">
+  <h1>Nuevo profesional</h1>
+  <%= link_to 'Volver', professionals_path, class: "action"%>
+</div>
 <%= render 'form', professional: @professional %>
 
-<%= link_to 'Back', professionals_path %>

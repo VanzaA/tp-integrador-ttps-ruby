@@ -6,10 +6,6 @@ class ProfessionalsController < ApplicationController
     @professionals = Professional.all
   end
 
-  # GET /professionals/1
-  def show
-  end
-
   # GET /professionals/new
   def new
     @professional = Professional.new
@@ -24,7 +20,7 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.new(professional_params)
 
     if @professional.save
-      redirect_to @professional, notice: 'Professional was successfully created.'
+      redirect_to professionals_path, notice: 'El profesional se creo correctamente.'
     else
       render :new
     end
@@ -33,7 +29,7 @@ class ProfessionalsController < ApplicationController
   # PATCH/PUT /professionals/1
   def update
     if @professional.update(professional_params)
-      redirect_to @professional, notice: 'Professional was successfully updated.'
+      redirect_to professionals_path, notice: 'El profesional se actualizo correctamente.'
     else
       render :edit
     end
@@ -47,7 +43,7 @@ class ProfessionalsController < ApplicationController
   # DELETE /professionals/1
   def destroy
     @professional.destroy
-    redirect_to professionals_url, notice: 'Professional was successfully destroyed.'
+    redirect_to professionals_url, notice: 'El profesional se borro correctamente.'
   end
 
   private

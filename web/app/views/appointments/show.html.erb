@@ -1,34 +1,33 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Date:</strong>
-  <%= @appointment.date %>
+  <strong>Fecha y hora:</strong>
+  <%= @appointment.date.strftime("%d/%m/%y - ") + @appointment.time.strftime("%H:%M hs") %>
 </p>
 
 <p>
-  <strong>Professional:</strong>
-  <%= @appointment.professional_id %>
+  <strong>Profesional:</strong>
+  <%= professional_id_to_fullname(@appointment.professional_id) %>
 </p>
 
 <p>
-  <strong>Name:</strong>
-  <%= @appointment.name %>
+  <strong>Nombre completo:</strong>
+  <%= @appointment.full_name %>
 </p>
 
 <p>
-  <strong>Surname:</strong>
-  <%= @appointment.surname %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
+  <strong>Telefono:</strong>
   <%= @appointment.phone %>
 </p>
 
 <p>
-  <strong>Notes:</strong>
+  <strong>Notas:</strong>
   <%= @appointment.notes %>
 </p>
 
-<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
-<%= link_to 'Back', appointments_path %>
+<hr style="margin-bottom: 1rem"/>
+<div class="action">
+  <%= link_to 'Editar', edit_appointment_path(@appointment) %> |
+  <%= link_to 'Cancelar turno',  @appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } %> |
+  <%= link_to 'Volver al listado', appointments_path %>
+</div>

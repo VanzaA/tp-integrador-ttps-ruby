@@ -24,7 +24,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
 
     if @appointment.save
-      redirect_to @appointment, notice: 'Appointment was successfully created.'
+      redirect_to @appointment, notice: 'El turno se creo correctamente.'
     else
       render :new
     end
@@ -33,7 +33,7 @@ class AppointmentsController < ApplicationController
   # PATCH/PUT /appointments/1
   def update
     if @appointment.update(appointment_params)
-      redirect_to @appointment, notice: 'Appointment was successfully updated.'
+      redirect_to @appointment, notice: 'El turno se actualizo correctamente.'
     else
       render :edit
     end
@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
   # DELETE /appointments/1
   def destroy
     @appointment.destroy
-    redirect_to appointments_url, notice: 'Appointment was successfully destroyed.'
+    redirect_to appointments_url, notice: 'El turno se cancelo correctamente.'
   end
 
   private

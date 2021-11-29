@@ -1,12 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Professionals</h1>
+<div class="action-header">
+  <h1>Profesionales</h1>
+  <%= link_to 'Crear profesional', new_professional_path, class: "action" %>
+</div>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Surname</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,14 +19,10 @@
       <tr>
         <td><%= professional.name %></td>
         <td><%= professional.surname %></td>
-        <td><%= link_to 'Show', professional %></td>
-        <td><%= link_to 'Edit', edit_professional_path(professional) %></td>
-        <td><%= link_to 'Destroy', professional, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Editar', edit_professional_path(professional) %></td>
+        <td><%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Esta seguro de que desea borrar?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Professional', new_professional_path %>

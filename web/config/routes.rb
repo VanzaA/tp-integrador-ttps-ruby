@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'download', action: :download, controller: 'professionals'
   resources :appointments
-  resources :professionals
+  resources :professionals, only: [:index, :new, :edit, :destroy, :create, :update]
   root to: 'application#home'
   resource :session, only: [:show, :create, :destroy]
 

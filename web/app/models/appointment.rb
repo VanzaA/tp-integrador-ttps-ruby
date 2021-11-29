@@ -10,6 +10,10 @@ class Appointment < ApplicationRecord
   validate :date_cannot_be_in_the_past
   validate :minute_step
 
+  def full_name
+    "#{surname.capitalize}, #{name.capitalize}"
+  end
+
   private
   def minute_step
     return unless date_and_time_present

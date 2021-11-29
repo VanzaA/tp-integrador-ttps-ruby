@@ -48,6 +48,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "Crear turno" %>
+    <%= form.submit appointment.new_record? ? "Crear turno" : "Actualizar turno" %>
   </div>
 <% end %>
