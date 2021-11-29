@@ -3,24 +3,31 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
+    authorize!
+
     @appointments = Appointment.all
   end
 
   # GET /appointments/1
   def show
+    authorize!
   end
 
   # GET /appointments/new
   def new
+    authorize!
+
     @appointment = Appointment.new
   end
 
   # GET /appointments/1/edit
   def edit
+    authorize!
   end
 
   # POST /appointments
   def create
+    authorize!
     @appointment = Appointment.new(appointment_params)
 
     if @appointment.save
@@ -32,6 +39,7 @@ class AppointmentsController < ApplicationController
 
   # PATCH/PUT /appointments/1
   def update
+    authorize!
     if @appointment.update(appointment_params)
       redirect_to @appointment, notice: 'El turno se actualizo correctamente.'
     else
@@ -41,6 +49,8 @@ class AppointmentsController < ApplicationController
 
   # DELETE /appointments/1
   def destroy
+    authorize!
+
     @appointment.destroy
     redirect_to appointments_url, notice: 'El turno se cancelo correctamente.'
   end

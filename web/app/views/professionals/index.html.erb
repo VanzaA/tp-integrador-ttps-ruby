@@ -2,7 +2,7 @@
 
 <div class="action-header">
   <h1>Profesionales</h1>
-  <%= link_to 'Crear profesional', new_professional_path, class: "action" %>
+  <%= link_to 'Crear profesional', new_professional_path, class: "action" if allowed_to?(:new?) %>
 </div>
 
 <table>
@@ -19,8 +19,9 @@
       <tr>
         <td><%= professional.name %></td>
         <td><%= professional.surname %></td>
-        <td><%= link_to 'Editar', edit_professional_path(professional) %></td>
-        <td><%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Esta seguro de que desea borrar?' } %></td>
+
+        <td><%= link_to 'Editar', edit_professional_path(professional) if allowed_to?(:edit?, professional)%></td>
+        <td><%= link_to 'Borrar', professional, method: :delete, data: { confirm: 'Esta seguro de que desea borrar?' } if allowed_to?(:destroy?, professional) %></td>
       </tr>
     <% end %>
   </tbody>

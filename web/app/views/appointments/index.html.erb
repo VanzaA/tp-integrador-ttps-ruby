@@ -2,7 +2,7 @@
 
 <div class="action-header">
   <h1>Turnos</h1>
-  <%= link_to 'Crear turno', new_appointment_path, class: "action" %>
+  <%= link_to 'Crear turno', new_appointment_path, class: "action" if allowed_to?(:new?, @appointments)%>
 </div>
 
 <table>
@@ -23,9 +23,9 @@
         <td><%= professional_id_to_fullname(appointment.professional_id) %></td>
         <td><%= appointment.name %></td>
         <td><%= appointment.surname %></td>
-        <td><%= link_to 'Ver', appointment %></td>
-        <td><%= link_to 'Editar', edit_appointment_path(appointment) %></td>
-        <td><%= link_to 'Cancelar', appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } %></td>
+        <td><%= link_to 'Ver', appointment if allowed_to?(:show?, appointment) %></td>
+        <td><%= link_to 'Editar', edit_appointment_path(appointment) if allowed_to?(:edit?, appointment) %></td>
+        <td><%= link_to 'Cancelar', appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } if allowed_to?(:destroy?, appointment) %></td>
       </tr>
     <% end %>
   </tbody>

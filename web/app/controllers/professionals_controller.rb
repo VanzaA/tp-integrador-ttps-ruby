@@ -3,20 +3,26 @@ class ProfessionalsController < ApplicationController
 
   # GET /professionals
   def index
+    authorize!
+
     @professionals = Professional.all
   end
 
   # GET /professionals/new
   def new
+    authorize!
+
     @professional = Professional.new
   end
 
   # GET /professionals/1/edit
   def edit
+    authorize!
   end
 
   # POST /professionals
   def create
+    authorize!
     @professional = Professional.new(professional_params)
 
     if @professional.save
@@ -28,6 +34,7 @@ class ProfessionalsController < ApplicationController
 
   # PATCH/PUT /professionals/1
   def update
+    authorize!
     if @professional.update(professional_params)
       redirect_to professionals_path, notice: 'El profesional se actualizo correctamente.'
     else
@@ -42,6 +49,8 @@ class ProfessionalsController < ApplicationController
 
   # DELETE /professionals/1
   def destroy
+    authorize!
+
     @professional.destroy
     redirect_to professionals_url, notice: 'El profesional se borro correctamente.'
   end

@@ -27,7 +27,7 @@
 
 <hr style="margin-bottom: 1rem"/>
 <div class="action">
-  <%= link_to 'Editar', edit_appointment_path(@appointment) %> |
-  <%= link_to 'Cancelar turno',  @appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } %> |
+  <%= link_to 'Editar', edit_appointment_path(@appointment) if allowed_to?(:edit?, @appointment)%> |
+  <%= link_to 'Cancelar turno',  @appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } if allowed_to?(:destroy?, @appointment)%> |
   <%= link_to 'Volver al listado', appointments_path %>
 </div>
