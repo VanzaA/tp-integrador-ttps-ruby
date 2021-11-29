@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(version: 2021_11_27_002204) do
 
   create_table "appointments", charset: "utf8mb4", force: :cascade do |t|
-    t.datetime "date", null: false
+    t.date "date", null: false
+    t.time "time", null: false
     t.bigint "professional_id", null: false
     t.string "name", null: false
     t.string "surname", null: false
@@ -21,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_002204) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["date", "professional_id"], name: "index_appointments_on_date_and_professional_id", unique: true
+    t.index ["date", "time", "professional_id"], name: "index_appointments_on_date_and_time_and_professional_id", unique: true
     t.index ["professional_id"], name: "index_appointments_on_professional_id"
   end
 

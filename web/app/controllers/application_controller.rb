@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :require_login, except: :home
+  before_action :require_login
 
   def home; end
   private

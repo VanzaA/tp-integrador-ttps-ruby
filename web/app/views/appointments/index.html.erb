@@ -19,7 +19,7 @@
   <tbody>
     <% @appointments.each do |appointment| %>
       <tr>
-        <td><%= appointment.date.strftime("%d/%m/%y - %H:%M hs") %></td>
+        <td><%= appointment.date.strftime("%d/%m/%y - ") + appointment.time.strftime("%H:%M hs")  %></td>
         <td><%= professional_id_to_fullname(appointment.professional_id) %></td>
         <td><%= appointment.name %></td>
         <td><%= appointment.surname %></td>
