@@ -6,7 +6,7 @@ class Appointment < ApplicationRecord
   validates :surname, presence: { message: "El apellido del paciente es obligatorio" }
   validates :phone, presence: { message: "El telefono es obligatorio" }
   validates :phone, numericality: { only_integer: true, message: "El telefono tiene que contener solo numeros" }
-  validates :date, uniqueness: { scope: [:time, :professional_id], message: "Ya existe un turno para este profesional" }
+  validates :date, uniqueness: { scope: [:time, :professional_id], message: "Ya existe un turno para este profesional a esa hora" }
   validate :date_cannot_be_in_the_past
   validate :minute_step
 

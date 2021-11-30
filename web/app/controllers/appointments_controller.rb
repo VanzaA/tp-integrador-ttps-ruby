@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_action :set_appointment, only: [:show, :edit, :update, :destroy, :reschedule, :update_time]
 
   # GET /appointments
   def index
@@ -13,6 +13,18 @@ class AppointmentsController < ApplicationController
     authorize!
   end
 
+  def reschedule
+    authorize!
+  end
+
+  def update_time
+    authorize!
+    if @appointment.update(appointment_params)
+      redirect_to @appointment, notice: 'El turno se actualizo correctamente.'
+    else
+      render :reschedule
+    end
+  end
   # GET /appointments/new
   def new
     authorize!

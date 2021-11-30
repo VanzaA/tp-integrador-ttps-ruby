@@ -12,21 +12,22 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label "Fecha" %>
-    <%= form.date_field :date, required: true %>
-  </div>
+  <% if appointment.new_record? %>
+    <div class="field">
+      <%= form.label "Fecha" %>
+      <%= form.date_field :date, required: true %>
+    </div>
 
-   <div class="field">
-    <%= form.label "Hora" %>
-    <%= form.time_field :time, value: time_format(appointment&.time), min: "08:00", max: "23:00", required: true %>
-  </div>
+    <div class="field">
+      <%= form.label "Hora" %>
+      <%= form.time_field :time, value: time_format(appointment&.time), min: "08:00", max: "23:00", required: true %>
+    </div>
 
-  <div class="field">
-    <%= form.label :professional_id %>
-    <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] }), required: true%>
-  </div>
-
+    <div class="field">
+      <%= form.label :professional_id %>
+      <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] }), required: true%>
+    </div>
+  <% end %>
   <div class="field">
     <%= form.label "Nombre" %>
     <%= form.text_field :name, required: true %>

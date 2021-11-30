@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   get 'download', action: :download, controller: 'professionals'
-  resources :appointments
+  resources :appointments do
+    member do
+      get 'reschedule'
+      patch 'update_time'
+    end
+  end
   resources :professionals, only: [:index, :new, :edit, :destroy, :create, :update] do
     member do
       post 'cancel_all_appointments'

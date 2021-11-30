@@ -26,4 +26,12 @@ class AppointmentPolicy < ApplicationPolicy
   def destroy?
     user.admin? || user.asistente?
   end
+
+  def reschedule?
+    user.admin? || user.asistente?
+  end
+
+  def update_time?
+    user.admin? || user.asistente?
+  end
 end

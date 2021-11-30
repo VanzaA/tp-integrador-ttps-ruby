@@ -12,20 +12,21 @@
       <th>Profesional asignado</th>
       <th>Nombre</th>
       <th>Apellido</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @appointments.each do |appointment| %>
       <tr>
-        <td><%= appointment.date.strftime("%d/%m/%y - ") + appointment.time.strftime("%H:%M hs")  %></td>
+        <td><%= appointment.date.strftime("%d/%m/%y - ") + appointment.time.strftime("%I:%M %P")  %></td>
         <td><%= professional_id_to_fullname(appointment.professional_id) %></td>
         <td><%= appointment.name %></td>
         <td><%= appointment.surname %></td>
         <td><%= link_to 'Ver', appointment if allowed_to?(:show?, appointment) %></td>
         <td><%= link_to 'Editar', edit_appointment_path(appointment) if allowed_to?(:edit?, appointment) %></td>
         <td><%= link_to 'Cancelar', appointment, method: :delete, data: { confirm: 'Estas seguro que deseas cancelar el turno?' } if allowed_to?(:destroy?, appointment) %></td>
+        <td><%= link_to 'Reprogramar', reschedule_appointment_path(appointment) if allowed_to?(:reschedule?, appointment) %></td>
       </tr>
     <% end %>
   </tbody>

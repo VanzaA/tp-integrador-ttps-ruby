@@ -1,0 +1,35 @@
+
+<div class="action-header">
+  <h1>Reprogramar turno</h1>
+  <%= link_to 'Volver', appointments_path, class:"action" %>
+</div>
+
+<%= form_with(model: @appointment, url: update_time_appointment_path(@appointment)) do |form| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= @appointment.errors.count %>
+        <%= @appointment.errors.count == 1 ? "error:" : "errores:" %>
+      </h2>
+
+      <% @appointment.errors.each do |error| %>
+        <p>- <%= error.message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label "Fecha" %>
+    <%= form.date_field :date, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label "Hora" %>
+    <%= form.time_field :time, value: time_format(@appointment&.time), min: "08:00", max: "23:00", required: true %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit "Actualizar turno" %>
+  </div>
+<% end %>
