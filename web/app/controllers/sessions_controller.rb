@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if login(login_params[:email], login_params[:password])
       redirect_to root_path
     else
-      render action: :show
+      redirect_to root_path, notice: 'Usuario o contraseña invalido.'
     end
   end
 

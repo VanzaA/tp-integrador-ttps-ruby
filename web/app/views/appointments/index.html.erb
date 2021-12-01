@@ -2,7 +2,10 @@
 
 <div class="action-header">
   <h1>Turnos</h1>
-  <%= link_to 'Crear turno', new_appointment_path, class: "action" if allowed_to?(:new?, @appointments)%>
+  <div class="multiple-action-header">
+    <%= link_to 'Exportar turnos', export_appointments_path, class: "action" if allowed_to?(:export?, @appointments) %>
+    <%= link_to 'Crear turno', new_appointment_path, class: "action" if allowed_to?(:new?, @appointments)%>
+  </div>
 </div>
 
 <table>

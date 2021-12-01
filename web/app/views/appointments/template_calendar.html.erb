@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Horas</th>
+        <% days.each do |day|%>
+          <th><%= day.to_s %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% range_time.each_with_index do |time, index| %>
+        <tr>
+          <td><%= time %></td>
+          <% days.each do |day|%>
+            <td>
+              <% appointments[day]&.select{|x| x.time.strftime("%k:%M").strip == time}&.each do | appointment | %>
+                <div><%= appointment.full_name %><strong> (<%= appointment.professional.full_name %>)</strong></div>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</body>
+</html>
+
+<style>
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8e8e8;
+}
+
+table{
+  border-spacing: 0;
+  border-collapse: separate;
+}
+
+thead {
+	width:100%;
+	background:#000;
+  color: #fff;
+}
+
+th {
+  background:#000;
+  color: #fff;
+  min-width: 150px;
+  padding: 10px;
+  text-align: center;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: grey;
+}
+
+tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+tr {
+  min-height: 35px;
+}
+td {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+tbody tr:last-child {
+  display: none;
+}
+</style>

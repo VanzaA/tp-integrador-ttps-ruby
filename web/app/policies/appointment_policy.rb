@@ -7,6 +7,14 @@ class AppointmentPolicy < ApplicationPolicy
     user.admin? || user.consultante? || user.asistente?
   end
 
+  def export?
+    user.admin? || user.consultante? || user.asistente?
+  end
+
+  def generate_file?
+    user.admin? || user.consultante? || user.asistente?
+  end
+
   def new?
     user.admin? || user.asistente?
   end

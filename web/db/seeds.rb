@@ -26,81 +26,93 @@ professional1 = Professional.find_or_create_by(name: "alma", surname: "esteves")
 professional2 = Professional.find_or_create_by(name: "juan", surname: "carlos")
 professional3 = Professional.find_or_create_by(name: "alberto", surname: "martines")
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 12, min: 15}), professional_id: professional1.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("12:15"), professional_id: professional1.id) do |appointment|
  appointment.name = "Jorge"
  appointment.surname = 11111222333
  appointment.phone = 11111222333
+ appointment.time -= 3.hours
 end
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 14, min: 15}), professional_id: professional1.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("14:15"), professional_id: professional1.id) do |appointment|
   appointment.name = "Maria"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 2.days), time: Time.now.change({ hour: 13, min: 45}), professional_id: professional1.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 2.days), time: Time.parse("13:45"), professional_id: professional1.id) do |appointment|
   appointment.name = "Isabel"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 16, min: 15}), professional_id: professional1.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("16:15"), professional_id: professional1.id) do |appointment|
   appointment.name = "Juana"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 3.days), time: Time.now.change({ hour: 18, min: 15}), professional_id: professional2.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 3.days), time: Time.parse("18:15"), professional_id: professional2.id) do |appointment|
   appointment.name = "Lucas"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
 end
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 9, min: 30}), professional_id: professional2.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("9:30"), professional_id: professional2.id) do |appointment|
   appointment.name = "Martin"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 12, min: 15}), professional_id: professional2.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("12:15"), professional_id: professional2.id) do |appointment|
   appointment.name = "Marta"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
 end
 
-Appointment.find_or_create_by(date: (Date.today + 5.days), time: Time.now.change({ hour: 15, min: 15}), professional_id: professional2.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 5.days), time: Time.parse("15:15"), professional_id: professional2.id) do |appointment|
   appointment.name = "Diego"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
 end
 
-Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.now.change({ hour: 12, min: 15}), professional_id: professional3.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 1.days), time: Time.parse("12:15"), professional_id: professional3.id) do |appointment|
   appointment.name = "Cris"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 2.days), time: Time.now.change({ hour: 18, min: 0}), professional_id: professional3.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 2.days), time: Time.parse("18:00"), professional_id: professional3.id) do |appointment|
   appointment.name = "Benjamin"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
 end
 
-Appointment.find_or_create_by(date: (Date.today + 6.days), time: Time.now.change({ hour: 19, min: 15}), professional_id: professional3.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 6.days), time: Time.parse("19:15"), professional_id: professional3.id) do |appointment|
   appointment.name = "Ines"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end
 
-Appointment.find_or_create_by(date: (Date.today + 6.days), time: Time.now.change({ hour: 11, min: 15}), professional_id: professional3.id) do |appointment|
+Appointment.find_or_create_by(date: (Date.today + 6.days), time: Time.parse("11:15"), professional_id: professional3.id) do |appointment|
   appointment.name = "Lautaro"
   appointment.surname = 11111222333
   appointment.phone = 11111222333
+  appointment.time -= 3.hours
   appointment.notes = MOCK_TEXT
 end

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   get 'download', action: :download, controller: 'professionals'
   resources :appointments do
+    collection do
+      get 'export'
+      post 'generate_file'
+    end
     member do
       get 'reschedule'
       patch 'update_time'

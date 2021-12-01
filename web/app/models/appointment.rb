@@ -10,6 +10,8 @@ class Appointment < ApplicationRecord
   validate :date_cannot_be_in_the_past
   validate :minute_step
 
+  scope :date_between, lambda {|start_date, end_date| where("date >= ? AND date <= ?", start_date, end_date ).group_by(&:date)}
+
   def full_name
     "#{surname.capitalize}, #{name.capitalize}"
   end

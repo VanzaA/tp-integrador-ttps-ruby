@@ -35,6 +35,9 @@ div.actions {
 #notice {
   color: green; }
 
+#notice-error {
+  color: red; }
+
 
 #error_explanation {
   margin-bottom: 20px;
@@ -56,3 +59,9 @@ div.actions {
 
 label {
   display: block; }
+
+.checkbox {
+  display:flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}

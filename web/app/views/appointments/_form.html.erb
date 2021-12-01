@@ -20,11 +20,11 @@
 
     <div class="field">
       <%= form.label "Hora" %>
-      <%= form.time_field :time, value: time_format(appointment&.time), min: "08:00", max: "23:00", required: true %>
+      <%= form.time_field :time, value: time_format(appointment&.time), min: "08:00", max: "20:00", required: true %>
     </div>
 
     <div class="field">
-      <%= form.label :professional_id %>
+      <%= form.label "Profesional" %>
       <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] }), required: true%>
     </div>
   <% end %>
