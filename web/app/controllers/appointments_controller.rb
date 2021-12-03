@@ -67,12 +67,6 @@ class AppointmentsController < ApplicationController
   def generate_file
     authorize!
 
-    range_time = (8...20).flat_map do |hour|
-      (0..3).map do |min|
-        "#{hour}:#{min*15 == 0 ? '00' : min*15}"
-      end
-    end
-
     appointments = []
     days = []
     if export_params[:all_week] == "1"
@@ -85,11 +79,9 @@ class AppointmentsController < ApplicationController
       appointments = { export_params[:date] => Appointment.where(date: export_params[:date]) }
     end
 
-    puts appointments
     if export_params[:professional_id] != "Seleciona un profesional"
       appointments = appointments.flat_map {|k,v|  {k => v.select{ |appointment| appointment.professional_id == export_params[:professional_id].to_i}}}.reduce(:merge)
     end
-    puts appointments
 
     template = File.read(lookup_context.find_template("appointments/template_calendar").identifier)
     content = ERB.new(template).result_with_hash({
@@ -103,16 +95,24 @@ class AppointmentsController < ApplicationController
 
   private
 
-    def set_appointment
-      @appointment = Appointment.find(params[:id])
+  def range_time
+    (8...20).flat_map do |hour|
+      (0..3).map do |min|
+        "#{hour}:#{min*15 == 0 ? '00' : min*15}"
+      end
     end
+  end
 
-    def appointment_params
-      params.require(:appointment).permit(:date, :time, :professional_id, :name, :surname, :phone, :notes)
-    end
+  def set_appointment
+    @appointment = Appointment.find(params[:id])
+  end
 
-    def export_params
-      params.fetch(:export, {}).permit(:professional_id, :date, :all_week)
-    end
+  def appointment_params
+    params.require(:appointment).permit(:date, :time, :professional_id, :name, :surname, :phone, :notes)
+  end
+
+  def export_params
+    params.fetch(:export, {}).permit(:professional_id, :date, :all_week)
+  end
 
 end
