@@ -8,7 +8,7 @@
 
   <div class="field">
     <%= form.label "Profesional" %>
-    <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] }.insert(0, "Seleciona un profesional")) %>
+    <%= form.select :professional_id, options_for_select(Professional.all.collect{|p| [ p.full_name, p.id ] }.insert(0, "Todos")) %>
   </div>
 
   <div class="checkbox">

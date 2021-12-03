@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy, :reschedule, :update_time]
+  NO_PROFESSIONAL_SELECTED = "Todos"
 
   def index
     authorize!
@@ -67,26 +68,21 @@ class AppointmentsController < ApplicationController
   def generate_file
     authorize!
 
-    appointments = []
-    days = []
+    @appointments = []
     if export_params[:all_week] == "1"
       date = Date.parse(export_params[:date])
-      begining_of_week = date - date.wday.days
-      days = (0...7).to_a.map { |num| (begining_of_week + num.days)}
-      appointments = Appointment.date_between(begining_of_week, begining_of_week + 6.days)
+      @begining_of_week = date - date.wday.days
+      @appointments = Appointment.date_between(@begining_of_week, @begining_of_week + 6.days)
     else
-      days = [export_params[:date]]
-      appointments = { export_params[:date] => Appointment.where(date: export_params[:date]) }
+      @appointments = { export_params[:date] => Appointment.where(date: export_params[:date]) }
     end
 
-    if export_params[:professional_id] != "Seleciona un profesional"
-      appointments = appointments.flat_map {|k,v|  {k => v.select{ |appointment| appointment.professional_id == export_params[:professional_id].to_i}}}.reduce(:merge)
-    end
+    filter_appointments_by_professional
 
     template = File.read(lookup_context.find_template("appointments/template_calendar").identifier)
     content = ERB.new(template).result_with_hash({
-      days: days,
-      appointments: appointments,
+      days: get_days_for_calendar,
+      appointments: @appointments,
       range_time: range_time
     })
 
@@ -95,8 +91,22 @@ class AppointmentsController < ApplicationController
 
   private
 
+  def filter_appointments_by_professional
+    if export_params[:professional_id] != NO_PROFESSIONAL_SELECTED
+      @appointments = @appointments.flat_map {|k,v|  {k => v.select{ |appointment| appointment.professional_id == export_params[:professional_id].to_i}}}.reduce(:merge)
+    end
+  end
+
+  def get_days_for_calendar
+    if export_params[:all_week] == "1"
+      (0...7).to_a.map { |num| (@begining_of_week + num.days)}
+    else
+      days = [export_params[:date]]
+    end
+  end
+
   def range_time
-    (8...20).flat_map do |hour|
+    (8..20).flat_map do |hour|
       (0..3).map do |min|
         "#{hour}:#{min*15 == 0 ? '00' : min*15}"
       end
