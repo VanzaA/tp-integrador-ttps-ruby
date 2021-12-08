@@ -52,4 +52,4 @@ production:
   <<: *default
   database: web_production
   username: web
-  password: <%= ENV['WEB_DATABASE_PASSWORD'] %>
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
