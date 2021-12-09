@@ -30,3 +30,8 @@ Para la creacion de turnos solo se aceptan turnos cada de saltos de 15 min, por 
 En caso de que no haya turnos en una semana o un dia especificado cuando se intenta exportar el calendario, igualmente se genera un calendario vacio.
 
 El proyecto se hizo pensado para mysql.
+
+### Heroku
+
+Dejo esta URL para poder acceder a la app hosteada en heroku https://polycon-ttps-ruby.herokuapp.com/
+Migre el proyecto a postgres y cambie alguna que otra configuracion del modo prod. Igualmente deje un Tag creado antes de hacer toda la logica para heroku, para que se pueda omitir los ultimos cambios
